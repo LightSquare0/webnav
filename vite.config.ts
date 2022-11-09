@@ -17,9 +17,10 @@ export default defineConfig({
 
   linaria({
     sourceMap: process.env.NODE_ENV !== 'production',
+    
   }),
-  css({
-    output: 'styles.css',
-  }),
+  // css({
+  //   output: 'styles.css',
+  // }),
   ]
 })
