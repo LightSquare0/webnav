@@ -16,13 +16,6 @@ export const globalStyles = css`
       width: 100%;
       overflow: none;
     }
-    
-    .mapboxgl-user-location-dot {
-      background-color: red;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-    }
   }
 `;
 export const FullscreenContainer = styled.div`
