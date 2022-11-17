@@ -1,7 +1,12 @@
 import mapboxgl from "mapbox-gl";
 import { useCallback, useEffect, useRef, useState } from "react";
-import Map, { GeolocateControl, Layer, Source } from "react-map-gl";
-import { useViewStateStore } from "./AppContext";
+import Map, {
+  GeolocateControl,
+  GeolocateResultEvent,
+  Layer,
+  Source,
+} from "react-map-gl";
+import { useUserCoordsStore, useViewStateStore } from "./AppContext";
 import { testRoute } from "./testRoute";
 
 const geojson = {
@@ -20,6 +25,11 @@ const steps = testRoute.routes[0].legs[0].steps;
 const ExtentedMap = () => {
   const viewState = useViewStateStore((state) => state.viewState);
   const setViewState = useViewStateStore((state) => state.setViewState);
+
+  const userCoordsState = useUserCoordsStore((state) => state.userCoordsState);
+  const setUserCoordsState = useUserCoordsStore(
+    (state) => state.setUserCoordsState
+  );
 
   const [mouseCoord, setMouseCoords] = useState({ lng: 0, lat: 0 });
 
@@ -45,6 +55,12 @@ const ExtentedMap = () => {
     }
   }, []);
 
+  function setUserCoords(e: GeolocateResultEvent) {
+    const { longitude, latitude } = e.coords;
+
+    setUserCoordsState({ long: longitude, lat: latitude });
+  }
+
   return (
     <Map
       {...viewState}
@@ -54,7 +70,11 @@ const ExtentedMap = () => {
       onClick={(e) => copyLocationAtMouseCoords(e.lngLat)}
       mapStyle="mapbox://styles/lightsquare/cl9wqhokb00am14qtnwb7d0d3"
     >
-      <GeolocateControl trackUserLocation={true} ref={geolocateControlRef} />
+      <GeolocateControl
+        trackUserLocation={true}
+        ref={geolocateControlRef}
+        onGeolocate={(e) => setUserCoords(e)}
+      />
       {/* @ts-ignore */}
       <Source id="polylineLayer" type="geojson" data={geojson}>
         <Layer

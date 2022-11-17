@@ -1,13 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import useSWR from "swr";
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
-import Map, { GeolocateControl, Layer, Source, ViewState } from "react-map-gl";
 import { FullscreenContainer, globalStyles } from "./Globals/GlobalStyles";
 import { mapboxOverrides } from "./Globals/MapboxOverrides";
-import { useViewStateStore } from "./AppContext";
 import ExtentedMap from "./ExtentedMap";
-import process from "process";
+import { useEffect } from "react";
+import Directions from "./Overlays/Directions";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -25,6 +22,7 @@ function App() {
   return (
     <div className={`${globalStyles} ${mapboxOverrides}`}>
       <FullscreenContainer>
+        <Directions/>
         <ExtentedMap />
       </FullscreenContainer>
     </div>

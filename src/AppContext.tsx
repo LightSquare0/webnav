@@ -6,6 +6,16 @@ interface ViewStateStore {
   setViewState: (newViewState: ViewState) => void;
 }
 
+type Coordinates = {
+  long: number;
+  lat: number;
+};
+
+interface UserCoordsStore {
+  userCoordsState: Coordinates;
+  setUserCoordsState: (newUserCoordsState: Coordinates) => void;
+}
+
 export const useViewStateStore = create<ViewStateStore>((set) => ({
   viewState: {
     longitude: 25.609788,
@@ -16,4 +26,12 @@ export const useViewStateStore = create<ViewStateStore>((set) => ({
     pitch: 0,
   },
   setViewState: (newState) => set(() => ({ viewState: newState })),
+}));
+
+export const useUserCoordsStore = create<UserCoordsStore>((set) => ({
+  userCoordsState: {
+    long: 0,
+    lat: 0,
+  },
+  setUserCoordsState: (newState) => set(() => ({ userCoordsState: newState })),
 }));
