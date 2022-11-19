@@ -7,6 +7,8 @@ import {
 } from "react";
 import useSWR from "swr";
 import { useUserCoordsStore } from "../AppContext";
+import Input from "../Controls/Input/Input";
+import { DirectionsContainer, Header, LocationsPicker } from "./DirectionsStyles";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
@@ -44,8 +46,12 @@ const Directions = () => {
   console.log(data);
 
   return (
-    <>
-      <input
+    <DirectionsContainer>
+      <LocationsPicker>
+        <Header onClick={() => console.log("merge")}>Where to?</Header>
+        <Input></Input>
+      </LocationsPicker>
+      {/* <input
         placeholder="First location"
         name="firstLocation"
         value={firstLocation}
@@ -69,8 +75,9 @@ const Directions = () => {
           data.features.map(
             (location: { place_name: any }) => location.place_name
           )}
-      </div>
-    </>
+      </div> */}
+      
+    </DirectionsContainer>
   );
 };
 

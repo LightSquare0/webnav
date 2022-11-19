@@ -23,7 +23,7 @@ export const FullscreenContainer = styled.div`
   height: 100vh;
 `;
 
-export const InterfaceContainer = styled.div`
+export const InterfaceOverlay = styled.div`
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -31,4 +31,7 @@ export const InterfaceContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
 `;

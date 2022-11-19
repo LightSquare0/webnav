@@ -1,6 +1,10 @@
 import "mapbox-gl/dist/mapbox-gl.css";
 import mapboxgl from "mapbox-gl";
-import { FullscreenContainer, globalStyles } from "./Globals/GlobalStyles";
+import {
+  FullscreenContainer,
+  globalStyles,
+  InterfaceOverlay,
+} from "./Globals/GlobalStyles";
 import { mapboxOverrides } from "./Globals/MapboxOverrides";
 import ExtentedMap from "./ExtentedMap";
 import { useEffect } from "react";
@@ -22,9 +26,11 @@ function App() {
   return (
     <div className={`${globalStyles} ${mapboxOverrides}`}>
       <FullscreenContainer>
-        <Directions/>
         <ExtentedMap />
       </FullscreenContainer>
+      <InterfaceOverlay>
+        <Directions />
+      </InterfaceOverlay>
     </div>
   );
 }
