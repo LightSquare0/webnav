@@ -8,49 +8,46 @@ import {
 import useSWR from "swr";
 import { useUserCoordsStore } from "../AppContext";
 import Input from "../Controls/Input/Input";
-import { DirectionsContainer, Header, LocationsPicker } from "./DirectionsStyles";
+import {
+  DirectionsContainer,
+  Header,
+  LocationsCardStyled,
+} from "./DirectionsStyles";
+import LocationsPicker from "./LocationsPicker";
+import LocationsSearcher from "./LocationsSearcher";
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-type LocationInputs = "firstLocation" | "secondLocation";
+export type LocationInputs = "firstLocation" | "secondLocation";
 
 const Directions = () => {
   const userCoordsState = useUserCoordsStore((state) => state.userCoordsState);
-  const [firstLocation, setFirstLocation] = useState<string>("");
-  const [secondLocation, setSecondLocation] = useState<string>("");
 
-  const [focusedInput, setFocusedInput] =
-    useState<LocationInputs>("firstLocation");
+  // if (focusedInput == "firstLocation") args = firstLocation;
+  // else args = secondLocation;
 
-  let args = firstLocation;
+  // function setArgsAtCurrentLocation() {
+  //   const { long, lat } = userCoordsState;
 
-  if (focusedInput == "firstLocation") args = firstLocation;
-  else args = secondLocation;
+  //   args = `${long},${lat}`;
+  //   setFirstLocation(args);
+  // }
 
-  function setArgsAtCurrentLocation() {
-    const { long, lat } = userCoordsState;
-
-    args = `${long},${lat}`;
-    setFirstLocation(args);
-  }
-
-  const { data, error, isValidating } = useSWR(
-    args.length > 0
-      ? `https://api.mapbox.com/geocoding/v5/mapbox.places/${args}.json?types=place%2Cpostcode%2Caddress&limit=10&access_token=${
-          import.meta.env.VITE_MAPBOX_TOKEN
-        }`
-      : null,
-    fetcher
-  );
-  console.log(args);
-  console.log(data);
+  // const { data, error, isValidating } = useSWR(
+  //   args.length > 0
+  //     ? `https://api.mapbox.com/geocoding/v5/mapbox.places/${args}.json?types=place%2Cpostcode%2Caddress&limit=10&access_token=${
+  //         import.meta.env.VITE_MAPBOX_TOKEN
+  //       }`
+  //     : null,
+  //   fetcher
+  // );
+  // console.log(args);
+  // console.log(data);
 
   return (
     <DirectionsContainer>
-      <LocationsPicker>
-        <Header onClick={() => console.log("merge")}>Where to?</Header>
-        <Input></Input>
-      </LocationsPicker>
+      <LocationsPicker />
+      <LocationsSearcher/>
       {/* <input
         placeholder="First location"
         name="firstLocation"
@@ -76,7 +73,6 @@ const Directions = () => {
             (location: { place_name: any }) => location.place_name
           )}
       </div> */}
-      
     </DirectionsContainer>
   );
 };

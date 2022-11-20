@@ -11,14 +11,22 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const HtmlInput = styled.input`
+export const HtmlInputContainer = styled.div`
+  display: flex;
   width: 100%;
   height: 100%;
   padding-inline: 0.75rem;
   padding-block: 0.5rem;
+`;
+
+export const HtmlInput = styled.input`
+  width: 100%;
+  height: 100%;
   font-size: 1rem;
   color: white;
   border: none;
   outline: none;
   background-color: transparent;
 `;
+
+export const InputIcon = styled.img``;
