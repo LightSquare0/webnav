@@ -5,13 +5,19 @@ import { Header, LocationsCardStyled } from "./DirectionsStyles";
 
 interface LocationsSearcherProps {
   firstLocation: string;
-  setFirstLocation: React.Dispatch<React.SetStateAction<string>>
+  setFirstLocation: React.Dispatch<React.SetStateAction<string>>;
   secondLocation: string;
-  setSecondLocation: React.Dispatch<React.SetStateAction<string>>
+  setSecondLocation: React.Dispatch<React.SetStateAction<string>>;
+  setFoundFirstLocation: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const LocationsSearcher: React.FC<LocationsSearcherProps> = ({firstLocation, setFirstLocation, secondLocation, setSecondLocation}) => {
-
+const LocationsSearcher: React.FC<LocationsSearcherProps> = ({
+  firstLocation,
+  setFirstLocation,
+  secondLocation,
+  setSecondLocation,
+  setFoundFirstLocation,
+}) => {
   return (
     <LocationsCardStyled>
       <Header>Where to?</Header>
@@ -20,7 +26,10 @@ const LocationsSearcher: React.FC<LocationsSearcherProps> = ({firstLocation, set
         name="startLocation"
         placeholder="Start location"
         value={firstLocation}
-        onChange={(e) => setFirstLocation(e.target.value)}
+        onChange={(e) => {
+          setFoundFirstLocation(false);
+          setFirstLocation(e.target.value);
+        }}
       ></Input>
       <Input
         icon="icons/search.svg"

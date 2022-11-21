@@ -9,10 +9,12 @@ const LocationsPicker: React.FC<{
   args: string;
   isReverseGeocoded: boolean;
   setIsReverseGeocoded: React.Dispatch<React.SetStateAction<boolean>>;
+  setFoundFirstLocation: React.Dispatch<React.SetStateAction<boolean>>;
   firstLocation: string;
 }> = ({
   setFirstLocation,
   setIsReverseGeocoded,
+  setFoundFirstLocation,
   isReverseGeocoded,
   args,
   firstLocation,
@@ -24,10 +26,12 @@ const LocationsPicker: React.FC<{
     if (isReverseGeocoded && data?.features.length >= 1) {
       setFirstLocation(data.features[0].place_name);
       setArgs(data.features[0].place_name);
+
       // console.log(data.features[0].place_name);
       console.log(`args: ${args} == firstLocation: ${firstLocation}`);
 
-      // setIsReverseGeocoded(false);
+      setIsReverseGeocoded(false);
+      setFoundFirstLocation(true);
     } else {
     }
   }, [isReverseGeocoded, setFirstLocation, data]);

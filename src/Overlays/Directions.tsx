@@ -41,6 +41,7 @@ const Directions = () => {
   );
 
   const [firstLocation, setFirstLocation] = useState<string>("");
+  const [foundFirstLocation, setFoundFirstLocation] = useState<boolean>(false);
   const [secondLocation, setSecondLocation] = useState<string>("");
   const [isReverseGeocoded, setIsReverseGeocoded] = useState<boolean>(false);
   const [focusedInput, setFocusedInput] =
@@ -54,16 +55,7 @@ const Directions = () => {
   }
 
   useEffect(() => {
-    // if (isReverseGeocoded) {
-    //   if (focusedInput == "firstLocation") {
-    //     console.log("hit");
-    //     setArgs(setArgsAtCurrentLocation());
-    //   }
-    // } else {
-    //   if (args == firstLocation) return;
-    //   // setArgs(firstLocation);
-    // }
-
+    if (foundFirstLocation) return;
     console.log(`args: ${args} == firstLocation: ${firstLocation}`);
     if (!isReverseGeocoded) {
       if (args == firstLocation) {
@@ -83,6 +75,7 @@ const Directions = () => {
   return (
     <DirectionsContainer>
       <LocationsSearcher
+        setFoundFirstLocation={setFoundFirstLocation}
         firstLocation={firstLocation}
         secondLocation={secondLocation}
         setFirstLocation={setFirstLocation}
@@ -91,6 +84,7 @@ const Directions = () => {
       <LocationsPicker
         firstLocation={firstLocation}
         setFirstLocation={setFirstLocation}
+        setFoundFirstLocation={setFoundFirstLocation}
         isReverseGeocoded={isReverseGeocoded}
         setIsReverseGeocoded={setIsReverseGeocoded}
         setArgs={setArgs}
