@@ -9,12 +9,23 @@ export const globalStyles = css`
       box-sizing: border-box;
     }
 
+    @font-face {
+      font-family: "Lexend Deca Regular";
+      src: url("fonts/LexendDeca-Regular.ttf");
+    }
+
+    @font-face {
+      font-family: "Lexend Deca Light";
+      src: url("fonts/LexendDeca-Light.ttf");
+    }
+
     html,
     body {
       height: 100%;
       min-height: 100%;
       width: 100%;
       overflow: none;
+      font-family: "Lexend Deca Regular";
     }
   }
 `;

@@ -1,32 +1,49 @@
-import { useState } from "react";
-import Input from "../Controls/Input/Input";
-import { LocationInputs } from "./Directions";
-import { Header, LocationsCardStyled } from "./DirectionsStyles";
+import { useEffect } from "react";
+import { useFetchGeocoder } from "./Directions";
+import { LocationsCardStyled } from "./DirectionsStyles";
+import Location, { LocationIconType } from "./Location";
 
-const LocationsPicker: React.FC = () => {
-  const [firstLocation, setFirstLocation] = useState<string>("");
-  const [secondLocation, setSecondLocation] = useState<string>("");
+const LocationsPicker: React.FC<{
+  setFirstLocation: React.Dispatch<React.SetStateAction<string>>;
+  setArgs: React.Dispatch<React.SetStateAction<string>>;
+  args: string;
+  isReverseGeocoded: boolean;
+  setIsReverseGeocoded: React.Dispatch<React.SetStateAction<boolean>>;
+  firstLocation: string;
+}> = ({
+  setFirstLocation,
+  setIsReverseGeocoded,
+  isReverseGeocoded,
+  args,
+  firstLocation,
+  setArgs,
+}) => {
+  const { data } = useFetchGeocoder(args, isReverseGeocoded);
 
-  const [focusedInput, setFocusedInput] =
-    useState<LocationInputs>("firstLocation");
+  useEffect(() => {
+    if (isReverseGeocoded && data?.features.length >= 1) {
+      setFirstLocation(data.features[0].place_name);
+      setArgs(data.features[0].place_name);
+      // console.log(data.features[0].place_name);
+      console.log(`args: ${args} == firstLocation: ${firstLocation}`);
 
-  let args = firstLocation;
+      // setIsReverseGeocoded(false);
+    } else {
+    }
+  }, [isReverseGeocoded, setFirstLocation, data]);
+
+  // console.log(data?.features[0].place_name);
+  // console.log(args);
+  console.log(data);
 
   return (
     <LocationsCardStyled>
-      <Header>Where to?</Header>
-      <Input
-        icon="icons/search.svg"
-        name="startLocation"
-        placeholder="Start location"
-        value={firstLocation}
-      ></Input>
-      <Input
-        icon="icons/search.svg"
-        name="endLocation"
-        placeholder="Destination"
-        value={secondLocation}
-      ></Input>
+      <button onClick={() => setIsReverseGeocoded(true)}>
+        Current Location
+      </button>
+      <Location type={LocationIconType.location} name="Brasov" distance={102} />
+      <Location type={LocationIconType.location} name="Brasov" distance={102} />
+      <Location type={LocationIconType.location} name="Brasov" distance={102} />
     </LocationsCardStyled>
   );
 };

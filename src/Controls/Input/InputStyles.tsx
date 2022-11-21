@@ -23,6 +23,7 @@ export const HtmlInput = styled.input`
   width: 100%;
   height: 100%;
   font-size: 1rem;
+  font-family: inherit;
   color: white;
   border: none;
   outline: none;

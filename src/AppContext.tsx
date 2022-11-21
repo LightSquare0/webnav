@@ -1,5 +1,6 @@
 import { ViewState } from "react-map-gl";
 import create from "zustand";
+import { LocationProps } from "./Overlays/Location";
 
 interface ViewStateStore {
   viewState: ViewState;
@@ -14,6 +15,11 @@ type Coordinates = {
 interface UserCoordsStore {
   userCoordsState: Coordinates;
   setUserCoordsState: (newUserCoordsState: Coordinates) => void;
+}
+
+interface LocationResultsStore {
+  locations: Array<LocationProps>;
+  setLocationResultsState: (newUserCoordsState: Array<LocationProps>) => void;
 }
 
 export const useViewStateStore = create<ViewStateStore>((set) => ({
@@ -33,5 +39,14 @@ export const useUserCoordsStore = create<UserCoordsStore>((set) => ({
     long: 0,
     lat: 0,
   },
-  setUserCoordsState: (newState) => set(() => ({ userCoordsState: newState })),
+  setUserCoordsState: (newState) =>
+    set(() => {
+      console.log("updated usercoords store");
+      return { userCoordsState: newState };
+    }),
+}));
+
+export const useLocationsResultsStore = create<LocationResultsStore>((set) => ({
+  locations: [],
+  setLocationResultsState: (newState) => set(() => ({ locations: newState })),
 }));
