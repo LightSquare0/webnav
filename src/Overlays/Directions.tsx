@@ -10,6 +10,7 @@ export type LocationInputs = "firstLocation" | "secondLocation";
 export interface ILocation {
   coords: string;
   address: string;
+  reverseGeocoded: boolean;
 }
 
 const Directions = () => {
@@ -21,10 +22,12 @@ const Directions = () => {
   const [firstLocation, setFirstLocation] = useState<ILocation>({
     coords: "",
     address: "",
+    reverseGeocoded: false,
   });
   const [secondLocation, setSecondLocation] = useState<ILocation>({
     coords: "",
     address: "",
+    reverseGeocoded: false,
   });
   const [focusedInput, setFocusedInput] =
     useState<LocationInputs>("firstLocation");
@@ -37,8 +40,21 @@ const Directions = () => {
 
   function setCurrentLocationAsPoint() {
     let currentLocation = getCurrentLocationAsString();
-    setFirstLocation({ coords: currentLocation, address: "" });
+    if (focusedInput == "firstLocation" && !secondLocation.reverseGeocoded)
+      setFirstLocation({
+        coords: currentLocation,
+        address: "",
+        reverseGeocoded: true,
+      });
+    else if (focusedInput == "secondLocation" && !firstLocation.reverseGeocoded)
+      setSecondLocation({
+        coords: currentLocation,
+        address: "",
+        reverseGeocoded: true,
+      });
   }
+
+  console.log(focusedInput);
 
   return (
     <DirectionsContainer>
@@ -47,6 +63,7 @@ const Directions = () => {
         secondLocation={secondLocation}
         setFirstLocation={setFirstLocation}
         setSecondLocation={setSecondLocation}
+        setFocusedInput={setFocusedInput}
       />
       <LocationsPicker setCurrentLocationAsPoint={setCurrentLocationAsPoint} />
     </DirectionsContainer>

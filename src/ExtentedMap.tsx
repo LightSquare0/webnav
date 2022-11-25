@@ -39,10 +39,6 @@ const ExtentedMap = () => {
     console.log(lng + "\n" + lat);
   };
 
-  useEffect(() => {}, []);
-
-  // console.log(steps);
-
   const map = useRef(null);
 
   const geolocateControlRef = useCallback((ref: any) => {
