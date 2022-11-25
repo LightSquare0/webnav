@@ -32,31 +32,33 @@ const LocationInput: React.FC<LocationInputProps> = ({
   setLocationState,
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
-  const [prevCoords, setPrevCoords] = useState<string>(coords);
+  const [prevLocation, setPrevLocation] = useState<ILocation>(location);
 
   const { data, error } = useFetchGeocoder(coords, true);
 
   useEffect(() => {
     if (data) {
-      setPrevCoords(coords);
       setInputValue(data.features[0].place_name);
     }
   }, [data, location]);
-  
-  // useEffect(() => {
-  //   if (coords == prevCoords && location.query != inputValue) {
-  //     setLocationState({ ...location, query: inputValue });
-  //   }
-  // }, [inputValue]);
+
+  useEffect(() => {
+    if (!location.reverseGeocoded) {
+      setLocationState({ ...location, query: inputValue });
+    }
+  }, [inputValue]);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setInputValue(e.target.value);
-    // if (location.reverseGeocoded)
-    //   setLocationState({
-    //     ...location,
-    //     query: inputValue,
-    //     reverseGeocoded: false,
-    //   });
+  }
+
+  function handleKeyPress() {
+    if (location.reverseGeocoded)
+      setLocationState({
+        ...location,
+        coords: "",
+        reverseGeocoded: false,
+      });
   }
 
   return (
@@ -67,6 +69,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
       value={inputValue}
       onFocus={(e) => setFocusedInput(e.target.name as LocationInputs)}
       onChange={handleChange}
+      onKeyDown={handleKeyPress}
     ></Input>
   );
 };

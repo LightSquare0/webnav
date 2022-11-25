@@ -14,11 +14,17 @@ export interface LocationProps {
   type: LocationIconType;
   name: string;
   distance: number;
+  onClick: React.MouseEventHandler<HTMLDivElement>;
 }
 
-const Location: React.FC<LocationProps> = ({ type, name, distance }) => {
+const Location: React.FC<LocationProps> = ({
+  type,
+  name,
+  distance,
+  onClick,
+}) => {
   return (
-    <LocationResult>
+    <LocationResult onClick={onClick}>
       <LocationIcon src={type} />
       <LocationName>{name}</LocationName>
       <LocationDistance>{distance} km away</LocationDistance>

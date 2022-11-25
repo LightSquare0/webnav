@@ -16,8 +16,6 @@ export interface ILocation {
 }
 
 const Directions = () => {
-  // const { data } = useFetchGeocoder()
-
   const userCoordsState = useUserCoordsStore(
     (state) => state.userCoordsState,
     shallow
@@ -64,6 +62,32 @@ const Directions = () => {
       });
   }
 
+  function handleLocationPicked(feature: any) {
+    if (focusedInput == "firstLocation")
+      setFirstLocation({
+        ...firstLocation,
+        query: feature.place_name,
+        coords: feature.center.toString(),
+      });
+
+    if (focusedInput == "secondLocation")
+      setSecondLocation({
+        ...secondLocation,
+        query: feature.place_name,
+        coords: feature.center.toString(),
+      });
+  }
+
+  function selectQuery() {
+    if (firstLocation.reverseGeocoded || secondLocation.reverseGeocoded)
+      return !firstLocation.reverseGeocoded
+        ? firstLocation.query
+        : secondLocation.query;
+
+    if (focusedInput == "firstLocation") return firstLocation.query;
+    else return secondLocation.query;
+  }
+
   console.log(firstLocation);
   console.log(secondLocation);
 
@@ -76,7 +100,11 @@ const Directions = () => {
         setSecondLocation={setSecondLocation}
         setFocusedInput={setFocusedInput}
       />
-      <LocationsPicker setCurrentLocationAsPoint={setCurrentLocationAsPoint} />
+      <LocationsPicker
+        query={selectQuery()}
+        handleLocationPicked={handleLocationPicked}
+        setCurrentLocationAsPoint={setCurrentLocationAsPoint}
+      />
     </DirectionsContainer>
   );
 };

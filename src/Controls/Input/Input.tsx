@@ -13,10 +13,11 @@ interface InputProps {
   value: string;
   onChange: React.ChangeEventHandler<HTMLInputElement> | undefined;
   onFocus: React.FocusEventHandler<HTMLInputElement> | undefined;
+  onKeyDown: React.KeyboardEventHandler<HTMLInputElement> | undefined;
 }
 
 const Input: React.FC<InputProps> = (
-  { icon, placeholder, name, type, value, onChange, onFocus },
+  { icon, placeholder, name, type, value, onChange, onFocus, onKeyDown },
   props
 ) => {
   return (
@@ -30,6 +31,7 @@ const Input: React.FC<InputProps> = (
           value={value}
           onChange={onChange}
           onFocus={onFocus}
+          onKeyDown={onKeyDown}
           {...props}
         ></HtmlInput>
         <InputIcon src={icon} />
