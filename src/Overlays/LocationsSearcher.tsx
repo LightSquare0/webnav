@@ -1,43 +1,74 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../Controls/Input/Input";
-import { LocationInputs } from "./Directions";
+import { ILocation } from "./Directions";
 import { Header, LocationsCardStyled } from "./DirectionsStyles";
+import useFetchGeocoder from "./useFetchGeocoder";
+
+interface LocationInputProps {
+  icon: string;
+  name: string;
+  placeholder: string;
+  coords: string;
+}
 
 interface LocationsSearcherProps {
-  firstLocation: string;
-  setFirstLocation: React.Dispatch<React.SetStateAction<string>>;
-  secondLocation: string;
-  setSecondLocation: React.Dispatch<React.SetStateAction<string>>;
-  setFoundFirstLocation: React.Dispatch<React.SetStateAction<boolean>>;
+  firstLocation: ILocation;
+  setFirstLocation: React.Dispatch<React.SetStateAction<ILocation>>;
+  secondLocation: ILocation;
+  setSecondLocation: React.Dispatch<React.SetStateAction<ILocation>>;
 }
+
+const LocationInput: React.FC<LocationInputProps> = ({
+  icon,
+  name,
+  placeholder,
+  coords,
+}) => {
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const { data, error } = useFetchGeocoder(coords, true);
+
+  const [prevCoords, setPrevCoords] = useState<string>(coords);
+  if (
+    data &&
+    coords != prevCoords &&
+    coords != ""
+  ) {
+    setPrevCoords(coords);
+    setInputValue(data.features[0].place_name);
+    console.log("sula");
+  }
+  
+  return (
+    <Input
+      icon={icon}
+      name={name}
+      placeholder={placeholder}
+      value={inputValue}
+      onChange={(e) => setInputValue(e.target.value)}
+    ></Input>
+  );
+};
 
 const LocationsSearcher: React.FC<LocationsSearcherProps> = ({
   firstLocation,
-  setFirstLocation,
   secondLocation,
-  setSecondLocation,
-  setFoundFirstLocation,
 }) => {
   return (
     <LocationsCardStyled>
       <Header>Where to?</Header>
-      <Input
+      <LocationInput
         icon="icons/search.svg"
         name="startLocation"
         placeholder="Start location"
-        value={firstLocation}
-        onChange={(e) => {
-          setFoundFirstLocation(false);
-          setFirstLocation(e.target.value);
-        }}
-      ></Input>
-      <Input
+        coords={firstLocation.coords}
+      ></LocationInput>
+      <LocationInput
         icon="icons/search.svg"
         name="endLocation"
         placeholder="Destination"
-        value={secondLocation}
-        onChange={(e) => setSecondLocation(e.target.value)}
-      ></Input>
+        coords={secondLocation.coords}
+      ></LocationInput>
     </LocationsCardStyled>
   );
 };
