@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Input from "../Controls/Input/Input";
 import { ILocation, LocationInputs } from "./Directions";
 import { Header, LocationsCardStyled } from "./DirectionsStyles";
@@ -10,6 +10,8 @@ interface LocationInputProps {
   placeholder: string;
   coords: string;
   setFocusedInput: React.Dispatch<React.SetStateAction<LocationInputs>>;
+  location: ILocation;
+  setLocationState: React.Dispatch<React.SetStateAction<ILocation>>;
 }
 
 interface LocationsSearcherProps {
@@ -26,15 +28,35 @@ const LocationInput: React.FC<LocationInputProps> = ({
   placeholder,
   coords,
   setFocusedInput,
+  location,
+  setLocationState,
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
+  const [prevCoords, setPrevCoords] = useState<string>(coords);
 
   const { data, error } = useFetchGeocoder(coords, true);
 
-  const [prevCoords, setPrevCoords] = useState<string>(coords);
-  if (data && coords != prevCoords && coords != "") {
-    setPrevCoords(coords);
-    setInputValue(data.features[0].place_name);
+  useEffect(() => {
+    if (data) {
+      setPrevCoords(coords);
+      setInputValue(data.features[0].place_name);
+    }
+  }, [data, location]);
+  
+  // useEffect(() => {
+  //   if (coords == prevCoords && location.query != inputValue) {
+  //     setLocationState({ ...location, query: inputValue });
+  //   }
+  // }, [inputValue]);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setInputValue(e.target.value);
+    // if (location.reverseGeocoded)
+    //   setLocationState({
+    //     ...location,
+    //     query: inputValue,
+    //     reverseGeocoded: false,
+    //   });
   }
 
   return (
@@ -44,7 +66,7 @@ const LocationInput: React.FC<LocationInputProps> = ({
       placeholder={placeholder}
       value={inputValue}
       onFocus={(e) => setFocusedInput(e.target.name as LocationInputs)}
-      onChange={(e) => setInputValue(e.target.value)}
+      onChange={handleChange}
     ></Input>
   );
 };
@@ -52,6 +74,8 @@ const LocationInput: React.FC<LocationInputProps> = ({
 const LocationsSearcher: React.FC<LocationsSearcherProps> = ({
   firstLocation,
   secondLocation,
+  setFirstLocation,
+  setSecondLocation,
   setFocusedInput,
 }) => {
   return (
@@ -63,6 +87,8 @@ const LocationsSearcher: React.FC<LocationsSearcherProps> = ({
         placeholder="Start location"
         setFocusedInput={setFocusedInput}
         coords={firstLocation.coords}
+        location={firstLocation}
+        setLocationState={setFirstLocation}
       ></LocationInput>
       <LocationInput
         icon="icons/search.svg"
@@ -70,6 +96,8 @@ const LocationsSearcher: React.FC<LocationsSearcherProps> = ({
         placeholder="Destination"
         coords={secondLocation.coords}
         setFocusedInput={setFocusedInput}
+        location={secondLocation}
+        setLocationState={setSecondLocation}
       ></LocationInput>
     </LocationsCardStyled>
   );

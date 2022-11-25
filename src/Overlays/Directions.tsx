@@ -4,16 +4,20 @@ import { DirectionsContainer } from "./DirectionsStyles";
 import LocationsPicker from "./LocationsPicker";
 import LocationsSearcher from "./LocationsSearcher";
 import shallow from "zustand/shallow";
+import useFetchGeocoder from "./useFetchGeocoder";
 
 export type LocationInputs = "firstLocation" | "secondLocation";
 
 export interface ILocation {
   coords: string;
   address: string;
+  query: string;
   reverseGeocoded: boolean;
 }
 
 const Directions = () => {
+  // const { data } = useFetchGeocoder()
+
   const userCoordsState = useUserCoordsStore(
     (state) => state.userCoordsState,
     shallow
@@ -22,13 +26,17 @@ const Directions = () => {
   const [firstLocation, setFirstLocation] = useState<ILocation>({
     coords: "",
     address: "",
+    query: "",
     reverseGeocoded: false,
   });
+
   const [secondLocation, setSecondLocation] = useState<ILocation>({
     coords: "",
     address: "",
+    query: "",
     reverseGeocoded: false,
   });
+
   const [focusedInput, setFocusedInput] =
     useState<LocationInputs>("firstLocation");
 
@@ -44,17 +52,20 @@ const Directions = () => {
       setFirstLocation({
         coords: currentLocation,
         address: "",
+        query: "",
         reverseGeocoded: true,
       });
     else if (focusedInput == "secondLocation" && !firstLocation.reverseGeocoded)
       setSecondLocation({
         coords: currentLocation,
         address: "",
+        query: "",
         reverseGeocoded: true,
       });
   }
 
-  console.log(focusedInput);
+  console.log(firstLocation);
+  console.log(secondLocation);
 
   return (
     <DirectionsContainer>
