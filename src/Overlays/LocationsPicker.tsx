@@ -1,5 +1,7 @@
+import { Suspense } from "react";
+import Loading from "../Controls/Loading/Loading";
 import { ILocation } from "./Directions";
-import { LocationsCardStyled } from "./DirectionsStyles";
+import { LoadingContainer, LocationsCardStyled } from "./DirectionsStyles";
 import Location, { LocationIconType } from "./Location";
 import useFetchGeocoder from "./useFetchGeocoder";
 
@@ -14,13 +16,19 @@ const LocationsPicker: React.FC<LocationsPickerProps> = ({
   handleLocationPicked,
   setCurrentLocationAsPoint,
 }) => {
-  const { data } = useFetchGeocoder(query, false);
+  const { data, error, isValidating } = useFetchGeocoder(query, false);
 
   console.log(data);
 
   return (
     <LocationsCardStyled>
       <button onClick={setCurrentLocationAsPoint}>Current Location</button>
+      {(isValidating || error) && (
+        <LoadingContainer>
+          {isValidating && <Loading />}
+          {error && <div>Failed to fetch location data.</div>}
+        </LoadingContainer>
+      )}
       {data &&
         data.features.map((feature: any) => (
           <Location

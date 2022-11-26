@@ -14,7 +14,7 @@ export const DirectionsContainer = styled.div`
 export const LocationsCardStyled = styled.div`
   display: flex;
   flex-flow: column;
-  gap: 0.625rem;
+  gap: 0.375rem;
   padding: 1.25rem;
   border-radius: 0.9375rem;
   background-color: hsla(0, 0%, 9%, 0.93);
@@ -36,6 +36,13 @@ export const LocationResult = styled.div`
     "icon name"
     "icon distance";
   column-gap: 0.75rem;
+  margin: 0.1875rem;
+  border-radius: 0.625rem;
+  cursor: pointer;
+
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.08);
+  }
 `;
 
 export const LocationIcon = styled.img`
@@ -52,4 +59,10 @@ export const LocationDistance = styled.div`
   grid-area: distance;
   font-family: "Lexend Deca Light";
   color: hsla(0, 0%, 67%, 1);
+`;
+
+export const LoadingContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
 `;

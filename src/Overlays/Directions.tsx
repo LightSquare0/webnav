@@ -12,6 +12,7 @@ export interface ILocation {
   coords: string;
   address: string;
   query: string;
+  found: boolean;
   reverseGeocoded: boolean;
 }
 
@@ -25,6 +26,7 @@ const Directions = () => {
     coords: "",
     address: "",
     query: "",
+    found: false,
     reverseGeocoded: false,
   });
 
@@ -32,6 +34,7 @@ const Directions = () => {
     coords: "",
     address: "",
     query: "",
+    found: false,
     reverseGeocoded: false,
   });
 
@@ -51,6 +54,7 @@ const Directions = () => {
         coords: currentLocation,
         address: "",
         query: "",
+        found: true,
         reverseGeocoded: true,
       });
     else if (focusedInput == "secondLocation" && !firstLocation.reverseGeocoded)
@@ -58,6 +62,7 @@ const Directions = () => {
         coords: currentLocation,
         address: "",
         query: "",
+        found: true,
         reverseGeocoded: true,
       });
   }
@@ -68,6 +73,7 @@ const Directions = () => {
         ...firstLocation,
         query: feature.place_name,
         coords: feature.center.toString(),
+        found: true,
       });
 
     if (focusedInput == "secondLocation")
@@ -75,10 +81,13 @@ const Directions = () => {
         ...secondLocation,
         query: feature.place_name,
         coords: feature.center.toString(),
+        found: true,
       });
   }
 
   function selectQuery() {
+    if (firstLocation.found && focusedInput == "firstLocation" || secondLocation.found && focusedInput == "secondLocation") return "";
+
     if (firstLocation.reverseGeocoded || secondLocation.reverseGeocoded)
       return !firstLocation.reverseGeocoded
         ? firstLocation.query

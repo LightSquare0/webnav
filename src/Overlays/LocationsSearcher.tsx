@@ -37,13 +37,14 @@ const LocationInput: React.FC<LocationInputProps> = ({
   const { data, error } = useFetchGeocoder(coords, true);
 
   useEffect(() => {
-    if (data) {
+    if (data && prevLocation != location) {
+      setPrevLocation(location);
       setInputValue(data.features[0].place_name);
     }
   }, [data, location]);
 
   useEffect(() => {
-    if (!location.reverseGeocoded) {
+    if (!location.reverseGeocoded && !location.found) {
       setLocationState({ ...location, query: inputValue });
     }
   }, [inputValue]);
@@ -57,9 +58,19 @@ const LocationInput: React.FC<LocationInputProps> = ({
       setLocationState({
         ...location,
         coords: "",
+        found: false,
+        reverseGeocoded: false,
+      });
+    if (location.found)
+      setLocationState({
+        ...location,
+        coords: "",
+        found: false,
         reverseGeocoded: false,
       });
   }
+
+  console.log(inputValue);
 
   return (
     <Input
