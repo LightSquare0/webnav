@@ -7,20 +7,20 @@ import Map, {
   Source,
 } from "react-map-gl";
 import { useUserCoordsStore, useViewStateStore } from "./AppContext";
-import { testRoute } from "./testRoute";
+import { testRoute2 } from "./testRoute2";
 
 const geojson = {
   type: "Feature",
   geometry: {
     type: "LineString",
-    coordinates: testRoute.routes[0].geometry.coordinates,
+    coordinates: testRoute2.routes[1].geometry.coordinates,
   },
   properties: {
     name: "Dinagat Islands",
   },
 };
 
-const steps = testRoute.routes[0].legs[0].steps;
+const steps = testRoute2.routes[0].legs[0].steps;
 
 const ExtentedMap = () => {
   const viewState = useViewStateStore((state) => state.viewState);
@@ -33,13 +33,19 @@ const ExtentedMap = () => {
 
   const [mouseCoord, setMouseCoords] = useState({ lng: 0, lat: 0 });
 
-  const copyLocationAtMouseCoords = (lgnlat: mapboxgl.LngLat) => {
+  const map = useRef(null);
+
+  const copyLocationAtMouseCoords = (
+    e: mapboxgl.MapLayerMouseEvent,
+    lgnlat: mapboxgl.LngLat
+  ) => {
     const { lng, lat } = lgnlat;
     navigator.clipboard.writeText(lng + " " + lat);
     console.log(lng + "\n" + lat);
+    //@ts-ignore
+    // let samp = map.current.queryRenderedFeatures(e.point);
+    // console.log(samp);
   };
-
-  const map = useRef(null);
 
   const geolocateControlRef = useCallback((ref: any) => {
     if (ref) {
@@ -52,9 +58,18 @@ const ExtentedMap = () => {
   }, []);
 
   function setUserCoords(e: GeolocateResultEvent) {
-    const { longitude, latitude } = e.coords;
-
-    setUserCoordsState({ long: longitude, lat: latitude });
+    const {
+      longitude,
+      latitude,
+      accuracy,
+      heading,
+      speed,
+      altitude,
+      altitudeAccuracy,
+    } = e.coords;
+    
+    setViewState({ ...viewState, longitude: longitude, latitude: latitude });
+    setUserCoordsState(e.coords);
   }
 
   return (
@@ -63,13 +78,18 @@ const ExtentedMap = () => {
       ref={map}
       onMove={(e) => setViewState(e.viewState)}
       onMouseMove={(e) => setMouseCoords(e.lngLat)}
-      onClick={(e) => copyLocationAtMouseCoords(e.lngLat)}
+      onClick={(e) => copyLocationAtMouseCoords(e, e.lngLat)}
       mapStyle="mapbox://styles/lightsquare/cl9wqhokb00am14qtnwb7d0d3"
     >
       <GeolocateControl
         trackUserLocation={true}
         ref={geolocateControlRef}
         onGeolocate={(e) => setUserCoords(e)}
+        positionOptions={{
+          enableHighAccuracy: true,
+          timeout: 6000,
+          maximumAge: 0,
+        }}
       />
       {/* @ts-ignore */}
       <Source id="polylineLayer" type="geojson" data={geojson}>

@@ -42,9 +42,9 @@ const Directions = () => {
     useState<LocationInputs>("firstLocation");
 
   function getCurrentLocationAsString() {
-    const { long, lat } = userCoordsState;
+    const { longitude, latitude } = userCoordsState;
 
-    return `${long},${lat}`;
+    return `${longitude},${latitude}`;
   }
 
   function setCurrentLocationAsPoint() {

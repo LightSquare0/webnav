@@ -42,7 +42,12 @@ export const InterfaceOverlay = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  display: flex;
-  justify-content: center;
   pointer-events: none;
+`;
+
+export const MiddleColumn = styled.div`
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  height: 100%;
 `;

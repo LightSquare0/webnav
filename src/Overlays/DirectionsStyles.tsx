@@ -14,6 +14,7 @@ export const DirectionsContainer = styled.div`
 export const LocationsCardStyled = styled.div`
   display: flex;
   flex-flow: column;
+  width: 100%;
   gap: 0.375rem;
   padding: 1.25rem;
   border-radius: 0.9375rem;
@@ -21,6 +22,7 @@ export const LocationsCardStyled = styled.div`
   backdrop-filter: blur(10px);
   border: 1px solid hsla(0, 0%, 17%, 0.3);
   box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.25);
+  pointer-events: all;
 `;
 
 export const Header = styled.h1`

@@ -1,20 +1,16 @@
 import { ViewState } from "react-map-gl";
 import create from "zustand";
 import { LocationProps } from "./Overlays/Location";
+import { Sula } from "./RouteRecorder";
 
 interface ViewStateStore {
   viewState: ViewState;
   setViewState: (newViewState: ViewState) => void;
 }
 
-type Coordinates = {
-  long: number;
-  lat: number;
-};
-
 interface UserCoordsStore {
-  userCoordsState: Coordinates;
-  setUserCoordsState: (newUserCoordsState: Coordinates) => void;
+  userCoordsState: GeolocationCoordinates;
+  setUserCoordsState: (newUserCoordsState: GeolocationCoordinates) => void;
 }
 
 interface LocationResultsStore {
@@ -36,8 +32,13 @@ export const useViewStateStore = create<ViewStateStore>((set) => ({
 
 export const useUserCoordsStore = create<UserCoordsStore>((set) => ({
   userCoordsState: {
-    long: 0,
-    lat: 0,
+    longitude: 0,
+    latitude: 0,
+    accuracy: 0,
+    heading: 0,
+    altitude: 0,
+    altitudeAccuracy: 0,
+    speed: 0,
   },
   setUserCoordsState: (newState) =>
     set(() => {
