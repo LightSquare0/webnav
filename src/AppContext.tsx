@@ -1,7 +1,6 @@
 import { ViewState } from "react-map-gl";
 import create from "zustand";
 import { LocationProps } from "./Overlays/Location";
-import { Sula } from "./RouteRecorder";
 
 interface ViewStateStore {
   viewState: ViewState;

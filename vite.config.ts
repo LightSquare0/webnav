@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import linaria from '@linaria/rollup';
-import css from 'rollup-plugin-css-only';
 import mkcert from 'vite-plugin-mkcert'
+import { splitVendorChunkPlugin } from 'vite'
 
 import dns from 'dns'
 
@@ -21,7 +21,7 @@ export default defineConfig({
     sourceMap: process.env.NODE_ENV !== 'production',
     
   }),
-
+  splitVendorChunkPlugin(),
   mkcert()
   // css({
   //   output: 'styles.css',

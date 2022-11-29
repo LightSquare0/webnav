@@ -12,7 +12,6 @@ import Directions from "./Overlays/Directions";
 import RouteRecorderOverlay from "./Overlays/RouteRecorderOverlay";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
 function App() {
   return (
