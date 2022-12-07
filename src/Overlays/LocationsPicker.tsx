@@ -1,6 +1,5 @@
-import { Suspense } from "react";
+import { Button } from "../Controls/Button/Button";
 import Loading from "../Controls/Loading/Loading";
-import { ILocation } from "./Directions";
 import { LoadingContainer, LocationsCardStyled } from "./DirectionsStyles";
 import Location, { LocationIconType } from "./Location";
 import useFetchGeocoder from "./useFetchGeocoder";
@@ -22,7 +21,7 @@ const LocationsPicker: React.FC<LocationsPickerProps> = ({
 
   return (
     <LocationsCardStyled>
-      <button onClick={setCurrentLocationAsPoint}>Current Location</button>
+      <Button onClick={setCurrentLocationAsPoint}>Current Location</Button>
       {(isValidating || error) && (
         <LoadingContainer>
           {isValidating && <Loading />}

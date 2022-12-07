@@ -9,7 +9,7 @@ const RouteRecorderOverlay: React.FC = () => {
         justifyContent: "center",
         width: "21.25rem",
         height: "100%",
-        marginBottom: "80px",
+        // marginBottom: "80px",
         alignItems: "flex-end",
       }}
     >

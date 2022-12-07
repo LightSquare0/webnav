@@ -35,14 +35,15 @@ export const FullscreenContainer = styled.div`
 `;
 
 export const InterfaceOverlay = styled.div`
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  width: 100%;
+  height: 100%;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   pointer-events: none;
+  padding: 0.625rem;
 `;
 
 export const MiddleColumn = styled.div`

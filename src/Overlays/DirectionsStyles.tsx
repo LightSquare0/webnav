@@ -6,7 +6,6 @@ export const DirectionsContainer = styled.div`
   width: 21.25rem;
   height: min-content;
   gap: 0.625rem;
-  margin-top: 0.625rem;
   color: white;
   pointer-events: all;
 `;
