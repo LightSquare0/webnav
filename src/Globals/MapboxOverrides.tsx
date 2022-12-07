@@ -4,15 +4,18 @@ import NavigationSvg from "../Icons/navigation.svg";
 export const mapboxOverrides = css`
   :global() {
     .mapboxgl-user-location-dot {
+      opacity: 0;
+      display: none;
       position: relative;
-      background-color: #FF7324;
+      background-color: #ff7324;
       width: 40px;
       height: 40px;
       border-radius: 50%;
     }
 
     .mapboxgl-user-location-dot::before {
-      background-color: #FF7324;
+      opacity: 0;
+      background-color: #ff7324;
       content: "";
       width: 40px;
       height: 40px;
@@ -23,13 +26,14 @@ export const mapboxOverrides = css`
 
     .mapboxgl-user-location-dot,
     .mapboxgl-user-location-dot::before {
-      background-color: #FF7324;
+      opacity: 0;
+      background-color: #ff7324;
       width: 40px;
       height: 40px;
     }
 
     .mapboxgl-user-location-dot:after {
-      background-color: #FF7324;
+      background-color: #ff7324;
       border-radius: 50%;
       border: 2px solid #fff;
       content: "";
@@ -42,6 +46,7 @@ export const mapboxOverrides = css`
       background-position: center;
       background-repeat: no-repeat;
       background-size: 18px;
+      opacity: 0;
     }
 
     .mapboxgl-user-location-show-heading .mapboxgl-user-location-heading {

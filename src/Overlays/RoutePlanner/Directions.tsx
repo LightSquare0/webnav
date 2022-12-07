@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useUserCoordsStore } from "../AppContext";
+import { useUserCoordsStore } from "../../AppContext";
 import { DirectionsContainer } from "./DirectionsStyles";
 import LocationsPicker from "./LocationsPicker";
 import LocationsSearcher from "./LocationsSearcher";

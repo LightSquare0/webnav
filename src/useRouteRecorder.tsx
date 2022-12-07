@@ -6,7 +6,7 @@ interface Points {
   timestamp: number;
 }
 
-const RouteRecorder: React.FC = () => {
+const useRouteRecorder = () => {
   const userCoordsState = useUserCoordsStore((state) => state.userCoordsState);
 
   const [isStarted, setIsStarted] = useState<boolean>(false);
@@ -44,11 +44,7 @@ const RouteRecorder: React.FC = () => {
     setRouteData([]);
   }
 
-  return (
-    <button onClick={handleStartStop}>
-      {isStarted ? <>Stop</> : <>Start</>} recording
-    </button>
-  );
+  return { handleStartStop, isStarted };
 };
 
-export default RouteRecorder;
+export default useRouteRecorder;

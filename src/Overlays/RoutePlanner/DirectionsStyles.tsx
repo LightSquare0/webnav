@@ -18,7 +18,7 @@ export const LocationsCardStyled = styled.div`
   padding: 1.25rem;
   border-radius: 0.9375rem;
   background-color: hsla(0, 0%, 9%, 0.93);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
   border: 1px solid hsla(0, 0%, 17%, 0.3);
   box-shadow: 0px 2px 5px 2px rgba(0, 0, 0, 0.25);
   pointer-events: all;

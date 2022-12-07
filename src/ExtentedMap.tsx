@@ -1,22 +1,33 @@
+import { url } from "inspector";
 import mapboxgl from "mapbox-gl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Map, {
   GeolocateControl,
   GeolocateResultEvent,
   Layer,
+  Marker,
   Source,
 } from "react-map-gl";
 import { useUserCoordsStore, useViewStateStore } from "./AppContext";
+import { LocationPuck, LocationPuckImage } from "./Globals/LocationPuck";
 import { testRoute2 } from "./testRoute2";
 
-const geojson = {
+const route = {
   type: "Feature",
   geometry: {
     type: "LineString",
     coordinates: testRoute2.routes[1].geometry.coordinates,
   },
+};
+
+const locationPuck = {
+  type: "Feature",
+  geometry: {
+    type: "Point",
+    coordinates: [-77.032, 38.913],
+  },
   properties: {
-    name: "Dinagat Islands",
+    title: "Location Puck",
   },
 };
 
@@ -67,7 +78,7 @@ const ExtentedMap = () => {
       altitude,
       altitudeAccuracy,
     } = e.coords;
-    
+
     setViewState({ ...viewState, longitude: longitude, latitude: latitude });
     setUserCoordsState(e.coords);
   }
@@ -81,10 +92,23 @@ const ExtentedMap = () => {
       onClick={(e) => copyLocationAtMouseCoords(e, e.lngLat)}
       mapStyle="mapbox://styles/lightsquare/cl9wqhokb00am14qtnwb7d0d3"
     >
+      <Marker
+        anchor="center"
+        latitude={userCoordsState.latitude}
+        longitude={userCoordsState.longitude}
+      >
+        <LocationPuck rotation={userCoordsState.heading || 0}>
+          <LocationPuckImage
+            width="40"
+            height="40"
+            src="icons/navigation.svg"
+          />
+        </LocationPuck>
+      </Marker>
       <GeolocateControl
         trackUserLocation={true}
         ref={geolocateControlRef}
-        onGeolocate={(e) => setUserCoords(e)}
+        // onGeolocate={(e) => setUserCoords(e)}
         positionOptions={{
           enableHighAccuracy: true,
           timeout: 6000,
@@ -92,7 +116,7 @@ const ExtentedMap = () => {
         }}
       />
       {/* @ts-ignore */}
-      <Source id="polylineLayer" type="geojson" data={geojson}>
+      <Source id="polylineLayer" type="geojson" data={route}>
         <Layer
           id="lineLayer"
           type="line"

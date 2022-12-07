@@ -1,6 +1,6 @@
 import { ViewState } from "react-map-gl";
 import create from "zustand";
-import { LocationProps } from "./Overlays/Location";
+import { LocationProps } from "./Overlays/RoutePlanner/Location";
 
 interface ViewStateStore {
   viewState: ViewState;

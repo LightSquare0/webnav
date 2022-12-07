@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Input from "../Controls/Input/Input";
+import Input from "../../Controls/Input/Input";
 import { ILocation, LocationInputs } from "./Directions";
 import { Header, LocationsCardStyled } from "./DirectionsStyles";
 import useFetchGeocoder from "./useFetchGeocoder";

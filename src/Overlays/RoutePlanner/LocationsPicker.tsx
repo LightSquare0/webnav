@@ -1,5 +1,5 @@
-import { Button } from "../Controls/Button/Button";
-import Loading from "../Controls/Loading/Loading";
+import { Button } from "../../Controls/Button/Button";
+import Loading from "../../Controls/Loading/Loading";
 import { LoadingContainer, LocationsCardStyled } from "./DirectionsStyles";
 import Location, { LocationIconType } from "./Location";
 import useFetchGeocoder from "./useFetchGeocoder";

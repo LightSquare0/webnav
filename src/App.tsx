@@ -8,8 +8,8 @@ import {
 } from "./Globals/GlobalStyles";
 import { mapboxOverrides } from "./Globals/MapboxOverrides";
 import ExtentedMap from "./ExtentedMap";
-import Directions from "./Overlays/Directions";
-import RouteRecorderOverlay from "./Overlays/RouteRecorderOverlay";
+import Directions from "./Overlays/RoutePlanner/Directions";
+import RouteRecorderOverlay from "./Overlays/RoutePlayerRecorder/RouteRecorderOverlay";
 
 mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_TOKEN;
 
