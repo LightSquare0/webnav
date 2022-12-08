@@ -10,7 +10,7 @@ export const LocationPuck = styled.div<{ rotation: number }>`
   border-radius: 50%;
   border: 1px solid white;
   position: absolute;
-  transform: rotate(${(props) => props.rotation});
+  transform: rotate(${(props) => props.rotation + "deg"});
 `;
 
 export const LocationPuckImage = styled.img`

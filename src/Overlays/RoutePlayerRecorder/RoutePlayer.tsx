@@ -26,6 +26,7 @@ const RoutePlayer: React.FC = () => {
         ...userCoordsState,
         latitude: route[0][pointIdx].coords.latitude,
         longitude: route[0][pointIdx].coords.longitude,
+        heading: route[0][pointIdx].coords.heading,
       });
     }
 
@@ -35,6 +36,7 @@ const RoutePlayer: React.FC = () => {
         ...userCoordsState,
         latitude: route[0][pointIdx].coords.latitude,
         longitude: route[0][pointIdx].coords.longitude,
+        heading: route[0][pointIdx].coords.heading,
       });
     }, route[0][pointIdx + 1].timestamp - route[0][pointIdx].timestamp);
 

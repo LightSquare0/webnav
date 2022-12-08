@@ -93,7 +93,7 @@ const ExtentedMap = () => {
       mapStyle="mapbox://styles/lightsquare/cl9wqhokb00am14qtnwb7d0d3"
     >
       <Marker
-        anchor="center"
+        // anchor="center"
         latitude={userCoordsState.latitude}
         longitude={userCoordsState.longitude}
       >
